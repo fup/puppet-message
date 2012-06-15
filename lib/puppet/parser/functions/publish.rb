@@ -22,10 +22,10 @@ module Puppet::Parser::Functions
       raise Puppet::ParseError, "publish(): Unable to setup message storage directory (#{e})"
     end
 
-#    # Ensure that we have 3 arguments
-#    unless args.length = 3 then
-#      raise Puppet::ParseError, "publish(): wrong number of arguments (#{args.length}; must be 3)"
-#    end
+    # Ensure that we have all 3 required arguments
+    unless args.length == 3 then
+      raise Puppet::ParseError, "publish(): wrong number of arguments (#{args.length}; must be 3)"
+    end
 
 
     begin
@@ -38,7 +38,7 @@ module Puppet::Parser::Functions
       CSV.open("#{path}/#{message_md5}.csv", 'w') do |row|
         row << [message, expiration]
       end
-    rescue
+    rescue => e
       raise Puppet::ParseError, "publish(): unable to write message to disk #{e}"
     end
   end
